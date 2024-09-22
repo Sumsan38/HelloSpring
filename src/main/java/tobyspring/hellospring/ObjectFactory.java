@@ -2,6 +2,10 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tobyspring.hellospring.exrate.CachedExRateProvider;
+import tobyspring.hellospring.payment.ExRateProvider;
+import tobyspring.hellospring.exrate.WebApiExRateProvider;
+import tobyspring.hellospring.payment.PaymentService;
 
 @Configuration // 빈끼리의 연관관계를 알려준다
 public class ObjectFactory {
