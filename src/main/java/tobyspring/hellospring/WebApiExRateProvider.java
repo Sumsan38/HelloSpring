@@ -1,7 +1,6 @@
 package tobyspring.hellospring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +22,9 @@ public class WebApiExRateProvider implements ExRateProvider {
 
         ObjectMapper mapper = new ObjectMapper();
         ExTateDate data = mapper.readValue(response, ExTateDate.class);
+
+        System.out.println("API ExRate:" + data.rates().get("KRW"));
+
         // record 객체를 사용하면 필드에 get 으로 접근하지 않는다.
         return data.rates().get("KRW");
     }

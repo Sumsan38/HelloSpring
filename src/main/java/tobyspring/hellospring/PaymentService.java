@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 // 프로그램이 실행되는 시점에 애노테이션 정보를 데이터처럼 읽어올 수 있다. 이를 메타 프로그램이라 한다.
 public class PaymentService {
-    ExRateProvider exRateProvider;
+    private final ExRateProvider exRateProvider;
 
     public PaymentService(ExRateProvider exRateProvider) {
         this.exRateProvider = exRateProvider;
