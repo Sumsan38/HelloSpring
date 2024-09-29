@@ -1,16 +1,17 @@
 package tobyspring.hellospring.payment;
 
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 public class Payment {
 
-    private Long orderId;
-    private String currency;
-    private BigDecimal foreignCurrencyAmount;
-    private BigDecimal exRate;              // exchangeRate
-    private BigDecimal convertedAmount;
-    private LocalDateTime validUntil;
+    private final Long orderId;
+    private final String currency;
+    private final BigDecimal foreignCurrencyAmount;
+    private final BigDecimal exRate;              // exchangeRate
+    private final BigDecimal convertedAmount;
+    private final LocalDateTime validUntil;
 
     public Payment(Long orderId, String currency,
                    BigDecimal foreignCurrencyAmount, BigDecimal exRate, BigDecimal convertedAmount,
@@ -21,6 +22,19 @@ public class Payment {
         this.exRate = exRate;
         this.convertedAmount = convertedAmount;
         this.validUntil = validUntil;
+    }
+
+    public static Payment createPrepared(Long orderId, String currency,
+                                         BigDecimal foreignCurrencyAmount, BigDecimal exRate,
+                                         LocalDateTime now) {
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
+        LocalDateTime validUntil = now.plusMinutes(30);
+
+        return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
+    }
+
+    public boolean isValid(Clock clock){
+        return LocalDateTime.now(clock).isBefore(this.validUntil);
     }
 
     public Long getOrderId() {
