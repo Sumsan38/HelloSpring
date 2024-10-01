@@ -9,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestPaymentConfig;
 
-import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
@@ -27,7 +26,7 @@ class PaymentServiceSpringTest {
 
     @Test
     @DisplayName("prepare 메소드가 요구사항 3가지를 잘 충족했는지 검증")
-    void convertedAmount() throws IOException {
+    void convertedAmount() {
         // exRate: 1000
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 
@@ -44,7 +43,7 @@ class PaymentServiceSpringTest {
 
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 
         // valid until이 prepare() 30분 뒤로 설정됐는가?

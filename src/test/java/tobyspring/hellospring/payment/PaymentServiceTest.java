@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.lang.NonNull;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
@@ -27,14 +26,14 @@ class PaymentServiceTest {
 
     @Test
     @DisplayName("prepare 메소드가 요구사항 3가지를 잘 충족했는지 검증")
-    void convertedAmount() throws IOException {
+    void convertedAmount() {
         testAmount(valueOf(500), valueOf(5_000), this.clock);
         testAmount(valueOf(1000), valueOf(10_000), this.clock);
         testAmount(valueOf(3000), valueOf(30_000), this.clock);
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1_000)), clock);
 
         Payment payment = paymentService.prepare(1L, "USD", TEN);
@@ -47,8 +46,7 @@ class PaymentServiceTest {
     }
 
     @NonNull
-    private static void testAmount(BigDecimal exRate, BigDecimal convertedAmount,
-                                   Clock clock) throws IOException {
+    private static void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
 
         // 기능 실행
