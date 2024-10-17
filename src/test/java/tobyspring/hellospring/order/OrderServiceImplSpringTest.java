@@ -57,7 +57,17 @@ public class OrderServiceImplSpringTest {
                 .isInstanceOf(DataIntegrityViolationException.class);
 
         JdbcClient client = JdbcClient.create(dataSource);
-        var count = client.sql("select count(*) from orders where 'no' = '0300'").query(Long.class).single();
+        var count = client.sql("select count(*) from orders where no = '0300'").query(Long.class).single();
         assertThat(count).isEqualTo(0);
+    }
+
+
+    private void printOrders() {
+        JdbcClient client = JdbcClient.create(dataSource);
+        JdbcClient.MappedQuerySpec<Order> query = client.sql("select * from orders").query(Order.class);
+        List<Order> list = query.list();
+        for (Order order : list) {
+            System.out.println("order = " + order);
+        }
     }
 }
